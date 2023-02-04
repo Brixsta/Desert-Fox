@@ -1,6 +1,6 @@
 # Desert Fox
 
-[Desert Fox](https://brixsta.github.io/Desert-Fox/)
+[View Desert Fox](https://brixsta.github.io/Desert-Fox/)
 
 - Desert Fox made using vanilla JS
 - Sprite Sheet used for Fox animation
