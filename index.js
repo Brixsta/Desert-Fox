@@ -2,10 +2,10 @@
     const canvas = document.querySelector('#game');
     const ctx = canvas.getContext('2d');    
     const global = {
-        theme: new Audio('./theme.mp3'),
-        jumpSound: new Audio('jump.mp3'),
-        damageSound: new Audio('damage.wav'),
-        spawnSound: new Audio('spawn.mp3'),
+        theme: new Audio('./audio/theme.mp3'),
+        jumpSound: new Audio('./audio/jump.mp3'),
+        damageSound: new Audio('./audio/damage.wav'),
+        spawnSound: new Audio('./audio/spawn.mp3'),
         PLAYER_WIDTH: 155,
         PLAYER_HEIGHT: 77,
         PLAYER_START_X: 15,
@@ -42,15 +42,11 @@
         dy: null,
         dWidth: null,
         dHeight: null,
-        produceClouds: false,
-        produceCacti: false
     }
     const handleSplashPageClick = () => {
         const splash = document.querySelector('.splash');
         splash.remove();
         global.isPlaying = true;
-        global.produceClouds = true;
-        global.produceCacti = true;
         global.theme.play();
         global.spawnSound.play();
         global.spawnSound.volume = .05;
@@ -90,7 +86,7 @@ class Player {
         this.width = width;
         this.height = height;
         this.sprite = new Image();
-        this.sprite.src = "sprite-sheet.png";
+        this.sprite.src = "./images/sprite-sheet.png";
     }
 
     draw () {
@@ -185,7 +181,7 @@ class Desert {
 
     draw () {
         const img = global.bgImg;
-        img.src = "desert.png"
+        img.src = "./images/desert.png"
         ctx.drawImage(img,this.x,this.y)
     }
 
@@ -209,7 +205,7 @@ class Obstacle {
 
     draw () {
         if(this.type === "cactus") {
-            this.sprite.src = `cactus_${this.height}_${this.width}.png`
+            this.sprite.src = `./images/cactus_${this.height}_${this.width}.png`
             ctx.drawImage(this.sprite,this.x,this.y)
         }
     }
@@ -258,7 +254,7 @@ class Cloud {
 }
 
 const generateRandomCloud = () => {
-    const clouds = ["cloud_40_170.png","cloud_40_200.png","cloud_80_100.png", "cloud_80_150.png","cloud_80_200.png"];
+    const clouds = ["./images/cloud_40_170.png","./images/cloud_40_200.png","./images/cloud_80_100.png", "./images/cloud_80_150.png","./images/cloud_80_200.png"];
     const random = Math.floor(Math.random()*clouds.length);
     return clouds[random];
 }
@@ -335,7 +331,7 @@ const generateRandomCloudAltitude = () => {
 
 const generateClouds = () => {
     if(global.isPlaying)global.cloudCounter++;
-    if(global.cloudCounter === 100 && global.produceClouds === true) {
+    if(global.cloudCounter === 100 && global.isPlaying === true) {
         global.clouds.push(new Cloud(640,generateRandomCloudAltitude(),200,80));
         global.cloudCounter = 0;
     }
@@ -380,9 +376,8 @@ const generateRandomCactiInterval = () => {
 }
 
 const generateCacti = () => {
-    console.log('testing')
     if(global.isPlaying)global.cactiSpawnCounter++;
-    if(global.cactiSpawnCounter === global.cactiInterval && global.produceCacti) {
+    if(global.cactiSpawnCounter === global.cactiInterval && global.isPlaying) {
         global.cactiSpawnCounter = 0;
         global.cactiInterval = generateRandomCactiInterval();
         global.cactus.push(new Obstacle(canvas.width,canvas.height,generateRandomObstacleWidth(),generateRandomObstacleHeight(), "cactus"));
