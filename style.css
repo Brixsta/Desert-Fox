@@ -1,0 +1,85 @@
+/****************** START OF INITIAL STYLES ******************/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.wrapper {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.canvas-container {
+    position: relative;
+}
+
+canvas {
+    border: solid 5px black;
+}
+
+.splash {
+    height: 100vh;
+    width: 100vw;
+    background-image: url('./splash.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    position: absolute;
+    z-index: 10000;
+    background-size: contain;
+}
+
+.splash:hover {
+    cursor: pointer;
+}
+/****************** END OF INITIAL STYLES ******************/
+
+
+/****************** START OF GAME OVER CONTAINER ******************/
+.game-over-container {
+    position: absolute;
+    width: 350px;
+    height: 110px;
+    background-color: rgba(0,0,0,.5);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    user-select: none;
+}
+
+.score-text {
+    color: white;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10px;
+    margin-bottom: 5px;
+}
+
+.replay-button {
+    padding: 10px;
+    width: 100px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: black;
+    margin: 10px;
+    margin-top: 5px;
+    font-size: 15px;
+    transition: all ease-in-out 400ms;
+    border: none;
+}
+
+.replay-button:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+}
+/****************** END OF GAME OVER CONTAINER ******************/
