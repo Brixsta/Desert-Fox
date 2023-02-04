@@ -42,11 +42,15 @@
         dy: null,
         dWidth: null,
         dHeight: null,
+        produceClouds: false,
+        produceCacti: false
     }
     const handleSplashPageClick = () => {
         const splash = document.querySelector('.splash');
         splash.remove();
         global.isPlaying = true;
+        global.produceClouds = true;
+        global.produceCacti = true;
         global.theme.play();
         global.spawnSound.play();
         global.spawnSound.volume = .05;
@@ -145,23 +149,23 @@ class Player {
     }
 
     move () {
-        if(global.jumping && global.falling === false) { // player jumps
+        if(global.jumping && global.falling === false && global.isPlaying) { // player jumps
 
-            if(this.y <= global.PLAYER_START_Y && player.y > global.PLAYER_JUMP_LIMIT && global.isPlaying) {
+            if(this.y <= global.PLAYER_START_Y && player.y > global.PLAYER_JUMP_LIMIT) {
                 this.y -= Math.floor(global.jumpSpeed)
                 global.jumpSpeed += global.jumpAcceleration;
             }
-            if(this.y <= global.PLAYER_JUMP_LIMIT && global.isPlaying) {
+            if(this.y <= global.PLAYER_JUMP_LIMIT) {
                 global.jumping = false;
                 global.falling = true;
                 global.jumpSpeed = global.INITIAL_JUMP_SPEED;
             }
-        } else if (global.falling ) { // player falls
-            if(this.y <= global.PLAYER_START_Y && global.isPlaying) {
+        } else if (global.falling && global.isPlaying) { // player falls
+            if(this.y <= global.PLAYER_START_Y ) {
                 this.y += global.fallSpeed;
                 global.fallSpeed += global.fallAcceleration;
             }
-            if(this.y >= global.PLAYER_START_Y && global.isPlaying) {
+            if(this.y >= global.PLAYER_START_Y) {
                 global.fallSpeed = global.INITIAL_FALL_SPEED;
                 this.y = global.PLAYER_START_Y;
                 global.falling = false;
@@ -330,8 +334,8 @@ const generateRandomCloudAltitude = () => {
 }
 
 const generateClouds = () => {
-    global.cloudCounter++;
-    if(global.cloudCounter === 100 && global.isPlaying) {
+    if(global.isPlaying)global.cloudCounter++;
+    if(global.cloudCounter === 100 && global.produceClouds === true) {
         global.clouds.push(new Cloud(640,generateRandomCloudAltitude(),200,80));
         global.cloudCounter = 0;
     }
@@ -376,8 +380,9 @@ const generateRandomCactiInterval = () => {
 }
 
 const generateCacti = () => {
-    global.cactiSpawnCounter++;
-    if(global.cactiSpawnCounter === global.cactiInterval && global.isPlaying) {
+    console.log('testing')
+    if(global.isPlaying)global.cactiSpawnCounter++;
+    if(global.cactiSpawnCounter === global.cactiInterval && global.produceCacti) {
         global.cactiSpawnCounter = 0;
         global.cactiInterval = generateRandomCactiInterval();
         global.cactus.push(new Obstacle(canvas.width,canvas.height,generateRandomObstacleWidth(),generateRandomObstacleHeight(), "cactus"));
