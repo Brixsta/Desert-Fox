@@ -45,7 +45,6 @@
     }
     const handleSplashPageClick = () => {
         const splash = document.querySelector('.splash');
-        splash.removeEventListener('click', handleSplashPageClick);
         splash.remove();
         global.isPlaying = true;
         global.theme.play();
