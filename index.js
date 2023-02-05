@@ -309,7 +309,7 @@ const restartGame = () => {
             global.spawnSound.volume = .05;
             global.isPlaying = true;
         }
-        
+        generateInitialClouds();
     }
 }
 
