@@ -182,7 +182,7 @@ class Desert {
     draw () {
         const img = global.bgImg;
         img.src = "./images/desert.png"
-        ctx.drawImage(img,this.x,this.y)
+        ctx.drawImage(img,this.x,this.y);
     }
 
     move () {
@@ -329,10 +329,24 @@ const generateRandomCloudAltitude = () => {
     return altitudes[random];
 }
 
+const generateInitialClouds = () => {
+    for(let i=0; i<4; i++) {
+        if(i === 0) {
+            global.clouds.push(new Cloud(100,generateRandomCloudAltitude()));
+        } else if (i === 1) {
+            global.clouds.push(new Cloud(300,generateRandomCloudAltitude()));
+        } else if (i === 2) {
+            global.clouds.push(new Cloud(500,generateRandomCloudAltitude()));
+        } else if (i === 3) {
+            global.clouds.push(new Cloud(710,generateRandomCloudAltitude()));
+        }
+    }
+}
+
 const generateClouds = () => {
     if(global.isPlaying)global.cloudCounter++;
     if(global.cloudCounter === 100 && global.isPlaying === true) {
-        global.clouds.push(new Cloud(640,generateRandomCloudAltitude(),200,80));
+        global.clouds.push(new Cloud(640,generateRandomCloudAltitude()));
         global.cloudCounter = 0;
     }
 }
@@ -384,7 +398,7 @@ const generateCacti = () => {
     }
 }
 const player = new Player(global.PLAYER_START_X,global.PLAYER_START_Y,global.PLAYER_WIDTH,global.PLAYER_HEIGHT);
-
+generateInitialClouds();
 initParallax();
 
 const animate = () => {
